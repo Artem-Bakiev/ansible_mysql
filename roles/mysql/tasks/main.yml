@@ -1,0 +1,31 @@
+---
+- name: Install mysql packages
+  ansible.builtin.apt:
+    name:
+      - mysql-server
+      - python3-pymysql
+    update_cache: true
+    state: present
+
+- name: Change root user password
+  community.mysql.mysql_user:
+    login_unix_socket: "/var/run/mysqld/mysqld.sock"
+    name: "root"
+    password: "{{ root_password }}"
+    host: localhost
+    state: present
+  notify: Restart MySQL service
+
+- name: Create .my.cnf for root
+  ansible.builtin.template:
+    src: my.cnf.j2
+    dest: /root/.my.cnf
+    owner: root
+    group: root
+    mode: u=rw,g=,o=
+
+  # Configure MySQL.
+- name: Configure database
+  ansible.builtin.include_tasks: database.yml
+- name: Create users
+  ansible.builtin.include_tasks: users.yml
