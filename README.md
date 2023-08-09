@@ -13,9 +13,6 @@ Also you can use -e(--extra-vars) flag to create databases, create users in the 
 
 #Usage
 
-1. Genetare inventory file from config.toml
-   Run python3 generate_inventory.py
-2. For mysql server installation run:
-    ansible-playbook mysql.yml -i inventory
-3. If you want to create new database, users and set password for this user
-   ansible-playbook mysql.yml -i inventory -e "db_name=dev db_user=dev db_pass=passs"
+1. Genetare inventory file from config.toml: Run python3 generate_inventory.py
+2. For mysql server installation run: ansible-playbook mysql.yml -i inventory
+3. If you want to create new database, users and set password for this user run: ansible-playbook mysql.yml -i inventory -e "db_name=dev db_user=dev db_pass=passs"
